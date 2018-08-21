@@ -80,9 +80,18 @@ export default class PDFDriver extends React.Component {
   componentDidMount() {
     const { filePath } = this.props;
     const containerWidth = this.container.offsetWidth;
-    PDFJS.getDocument(filePath, null, null, this.progressCallback.bind(this)).then((pdf) => {
+    const documentLoadingTask = PDFJS.getDocument(filePath);
+
+    documentLoadingTask.onProgress = this.progressCallback.bind(this);
+
+    documentLoadingTask.then((pdf) => {
       this.setState({ pdf, containerWidth });
     });
+
+
+    // PDFJS.getDocument(filePath, null, null, this.progressCallback.bind(this)).then((pdf) => {
+    //   this.setState({ pdf, containerWidth });
+    // });
   }
 
   setZoom(zoom) {
@@ -92,7 +101,7 @@ export default class PDFDriver extends React.Component {
   }
 
   progressCallback(progress) {
-    const percent = ((progress.loaded / progress.total) * 100).toFixed();
+    const percent = ((progress.loaded / (progress.total || progress.loaded)) * 100).toFixed();
     this.setState({ percent });
   }
 
@@ -115,6 +124,7 @@ export default class PDFDriver extends React.Component {
     const pages = Array.apply(null, { length: pdf.numPages });
     return pages.map((v, i) => (
       (<PDFPage
+        key={`pdf-page-${Math.random()}`}
         index={i + 1}
         pdf={pdf}
         containerWidth={containerWidth}

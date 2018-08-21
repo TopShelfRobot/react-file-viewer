@@ -20,10 +20,11 @@ import mp3 from '../example_files/sample.mp3'
 import rtf from '../example_files/sample.rtf';
 import pdf from '../example_files/sample.pdf';
 
+const url = 'https://pathway-awj-local.s3.amazonaws.com/bdf6ce17-e3af-4b7e-b0c9-c12310fb8c46/attachment%20%281%29.pdf?AWSAccessKeyId=AKIAJNMRWYW6A3D2G66Q&Expires=1534813898&Signature=pzdrJ7U1l2zOKz9fNrWbAuJMvFM%3D';
 ReactDOM.render(
   <FileViewer
     fileType="pdf"
-    filePath={pdf}
+    filePath={url}
   />,
   window.document.getElementById('app')
 );
