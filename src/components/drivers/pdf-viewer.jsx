@@ -87,11 +87,6 @@ export default class PDFDriver extends React.Component {
     documentLoadingTask.then((pdf) => {
       this.setState({ pdf, containerWidth });
     });
-
-
-    // PDFJS.getDocument(filePath, null, null, this.progressCallback.bind(this)).then((pdf) => {
-    //   this.setState({ pdf, containerWidth });
-    // });
   }
 
   setZoom(zoom) {
